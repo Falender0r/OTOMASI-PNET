@@ -7,42 +7,42 @@ YELLOW="\e[33m"
 RESET="\e[0m"
 
 #Variabel Konfigurasi
-VLAN_INTERFACE="eth1.11"
-VLAN_ID=11
+VLAN_INTERFACE="eth1.11"          # Ganti VLAN menjadi eth1.11
+VLAN_ID=11                        # Ganti VLAN ID menjadi 11
 IP_ADDR="$IP_Router$IP_Pref"      # IP address untuk interface VLAN di Ubuntu
 
 # Destinasi folder
-DHCP_CONF="/etc/dhcp/dhcpd.conf" #Tempat Konfigurasi DHCP
-NETPLAN_CONF="/etc/netplan/01-netcfg.yaml" # Tempat Konfigurasi Netplan
-DDHCP_CONF="/etc/default/isc-dhcp-server" #Tempat konfigurasi default DHCP
-SYSCTL_CONF="/etc/sysctl.conf" #Tempat Konfigurasi IP Forwarding
+DHCP_CONF="/etc/dhcp/dhcpd.conf"  # Tempat Konfigurasi DHCP
+NETPLAN_CONF="/etc/netplan/01-netcfg.yaml"  # Tempat Konfigurasi Netplan
+DDHCP_CONF="/etc/default/isc-dhcp-server"   # Tempat konfigurasi default DHCP
+SYSCTL_CONF="/etc/sysctl.conf"     # Tempat Konfigurasi IP Forwarding
 
-#Ip PNETLAB
+# Ip PNETLAB
 IPNET="192.168.74.137"
-#ip default perangkat
-IPU="192.168.11.1"
+# ip default perangkat
+IPU="192.168.10.1"
 IPROUTE_ADD="192.168.200.1/24"
-#MIKROTIK
-MIKROTIK_IP="192.168.200.1"     # IP MikroTik yang baru
+# MIKROTIK
+MIKROTIK_IP="192.168.200.1"       # IP MikroTik yang baru
 MIKROTIK_S="192.168.200.0"
-MPORT="30014"
-#CISCO
-SPORT="30013"
+MPORT="30005"
+# CISCO
+SPORT="30002"
 
-#Konfigurasi IP Yang Anda Inginkan
-IP_A="11"
+# Konfigurasi IP Yang Anda Inginkan
+IP_A="11"                          # Ganti IP_A menjadi 11
 IP_B="200"
 IP_C="2"
 IP_BC="255.255.255.0"
-IP_Subnet="192.168.$IP_A.0"
-IP_Router="192.168.$IP_A.1"
-IP_Range="192.168.$IP_A.$IP_C 192.168.$IP_A.$IP_B"
+IP_Subnet="192.168.$IP_A.0"        # Ganti IP_Subnet menjadi 192.168.11.0
+IP_Router="192.168.$IP_A.1"        # Ganti IP_Router menjadi 192.168.11.1
+IP_Range="192.168.$IP_A.$IP_C 192.168.$IP_A.$IP_B"  # Ganti IP_Range menjadi 192.168.11.2 192.168.11.200
 IP_DNS="8.8.8.8, 8.8.4.4"
 IP_Pref="/24"
 
 # FIX DHCP
-IP_FIX="192.168.11.10"
-IP_MAC="00:50:79:66:68:0f"
+IP_FIX="192.168.11.10"             # Ganti IP_FIX menjadi 192.168.11.10
+IP_MAC="00:50:79:66:68:03"
 
 # Fungsi untuk memeriksa status exit
 check_status() {
@@ -79,19 +79,12 @@ set -e
 clear
 cat << EOF
 
-  ___  _______ ____  __  __           _____ _____ 
-/  __ \__   __/ __ \|  \/  |   /\    / ____|_   _|
-| |  | | | | | |  | | \  / |  /  \  | (___   | |
-| |  | | | | | |  | | |\/| | / /\ \  \___ \  | |
-| |__| | | | | |__| | |  | |/ ____ \ ____) |_| |_ 
- \____/  |_|  \____/|_|  |_/_/    \_\_____/|_____|
-  ______      _____  _____  _____
- |  ____/\   |  __ \|_   _|/ ____|
- | |__ /  \  | |__) | | | | (___
- |  __/ /\ \ |  _  /  | |  \___ \
- | | / ____ \| | \ \ _| |_ ____) |
- |_|/_/    \_\_|  \_\_____|_____/                                  
-
+   ___ _____ ___  __  __   _   ___ ___   ___ _   ___ ___ ___ 
+  / _ \_   _/ _ \|  \/  | /_\ / __|_ _| | __/_\ | _ \_ _/ __|
+ | (_) || || (_) | |\/| |/ _ \\__ \| |  | _/ _ \|   /| |\__ \
+  \___/ |_| \___/|_|  |_/_/ \_\___/___| |_/_/ \_\_|_\___|___/
+                                                             
+                       
 EOF
 sleep 5
 echo "Inisialisasi awal ..."
@@ -130,10 +123,10 @@ network:
     eth1:
       dhcp4: no
   vlans:
-     eth1.11:
-       id: 11
+     eth1.11:           # Ganti VLAN menjadi eth1.11
+       id: 11            # Ganti VLAN ID menjadi 11
        link: eth1
-       addresses: [$IP_Router$IP_Pref]
+       addresses: [$IP_Router$IP_Pref]   # Ganti IP_Router menjadi 192.168.11.1
 EOF
 
 # Cek keberhasilan konfigurasi Netplan
@@ -213,8 +206,4 @@ check_status "Restart isc-dhcp-server"
 # Akhir
 check_akhir
 clear
-
-# Dokumentasi
-# -eq 0: Mengecek apakah kode status sama dengan 0 (menandakan instalasi berhasil).
-# -ne 0: Mengecek apakah nilai kode status tidak sama dengan 0 (indikasi kegagalan).
 # $?: Menyimpan kode status dari perintah terakhir yang dijalankan. Kode status 0 berarti perintah berhasil, sedangkan nilai lain menunjukkan kegagalan.
