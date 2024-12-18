@@ -1,60 +1,47 @@
 #!/bin/bash
 
-# Konfigurasi Dasar
-IPNET="192.168.11.137"   # IP Cisco Switch (nomor absen 11)
-SPORT="30002"            # Port untuk Telnet
-VLAN_ID=11               # VLAN ID (nomor absen 11)
+IPNET="192.168.74.137"
+SPORT="30002"
+MIKROTIK_IP="192.168.200.1"  # IP MikroTik
+UBUNTU_IP="192.168.11.1"     # IP Ubuntu
 
-# Telnet ke Switch Cisco dan Konfigurasi VLAN
+# Menyambung ke Cisco dan mengkonfigurasi interface
 {
     sleep 1
     echo "enable"
     sleep 1
     echo "configure terminal"
     sleep 1
-
-    # Konfigurasi VLAN
-    echo "vlan $VLAN_ID"
+    echo "int e0/1"
     sleep 1
-    echo "name VLAN_$VLAN_ID"
+    echo "sw mo acc"  # Mengubah mode interface menjadi akses
     sleep 1
-    echo "exit"
+    echo "sw acc vl 10"  # Mengonfigurasi VLAN 10 pada interface
     sleep 1
-
-    # Interface e0/1 sebagai akses VLAN 11
-    echo "interface e0/1"
-    sleep 1
-    echo "switchport mode access"
-    sleep 1
-    echo "switchport access vlan $VLAN_ID"
-    sleep 1
-    echo "no shutdown"
+    echo "no sh"  # Mengaktifkan interface
     sleep 1
     echo "exit"
     sleep 1
-
-    # Interface e0/0 sebagai trunk untuk VLAN 11
     echo "interface e0/0"
     sleep 1
-    echo "switchport trunk encapsulation dot1q"
+    echo "sw tr encap do"  # Mengonfigurasi trunk interface dengan mode dot1q
     sleep 1
-    echo "switchport mode trunk"
+    echo "sw mo tr"  # Mengubah mode interface menjadi trunk
     sleep 1
-    echo "switchport trunk allowed vlan $VLAN_ID"
-    sleep 1
-    echo "no shutdown"
+    echo "no sh"  # Mengaktifkan interface
     sleep 1
     echo "exit"
     sleep 1
-
-    # Verifikasi VLAN di Cisco
-    echo "show vlan brief"
-    sleep 2
-    echo "show running-config"
-    sleep 2
-    echo "write memory"
+    echo "ip route 192.168.200.0 255.255.255.0 $MIKROTIK_IP"  # Menambahkan route ke MikroTik
     sleep 1
-    echo "exit"
-} | telnet $IPNET $SPORT
+    echo "ip route 192.168.11.0 255.255.255.0 $UBUNTU_IP"  # Menambahkan route ke Ubuntu
+    sleep 1
+} | telnet $IPNET $SPORT > /dev/null
 
-echo "Konfigurasi VLAN di Cisco Switch selesai!"
+# Memeriksa status konfigurasi
+sleep 2
+if [ $? -eq 0 ]; then
+    echo "Konfigurasi CISCO berhasil diterapkan."
+else
+    echo "Terjadi kesalahan saat menerapkan konfigurasi."
+fi
