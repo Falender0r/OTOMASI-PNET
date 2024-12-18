@@ -25,9 +25,9 @@ IPROUTE_ADD="192.168.200.1/24"
 # MIKROTIK
 MIKROTIK_IP="192.168.200.1"       # IP MikroTik yang baru
 MIKROTIK_S="192.168.200.0"
-MPORT="30005"
+MPORT="30014"
 # CISCO
-SPORT="30002"
+SPORT="30013"
 
 # Konfigurasi IP Yang Anda Inginkan
 IP_A="11"                          # Ganti IP_A menjadi 11
