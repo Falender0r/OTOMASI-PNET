@@ -1,7 +1,7 @@
 #!/bin/bash
 
 IPNET="192.168.74.137"
-SPORT="30002"
+SPORT="30013"
 MIKROTIK_IP="192.168.200.1"  # IP MikroTik
 UBUNTU_IP="192.168.11.1"     # IP Ubuntu
 
