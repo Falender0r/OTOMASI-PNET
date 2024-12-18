@@ -3,7 +3,7 @@
 IPNET="192.168.74.137"
 MIKROTIK_IP="192.168.200.1"  # IP MikroTik yang baru
 MIKROTIK_S="192.168.200.0"
-MPORT="30005"
+MPORT="30014"
 
 expect << EOF > /dev/null
 spawn telnet $IPNET $MPORT
