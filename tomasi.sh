@@ -185,12 +185,12 @@ sudo netfilter-persistent save > /dev/null
 
 # Masuk Ke Sistem Cisco
 echo "Melakukan Konfigurasi Untuk Cisco..."
-./cisco.sh
+./ciscotomasi.sh
 check_status "Konfigurasi Cisco"
 
 # Masuk Ke Sistem Mikrotik
 echo "Melakukan Konfigurasi Untuk Mikrotik..."
-./mik.sh
+./miktomasi.sh
 check_status "Konfigurasi Mikrotik"
 
 # Routing Ubuntu dan Mikrotik
